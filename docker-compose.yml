@@ -9,6 +9,7 @@ services:
       - VERSION=docker
     volumes:
       - D:\:/media
+      - ./backup/plex/config:/config
     ports:
       - "32400:32400"
       - "3005:3005"
@@ -19,4 +20,18 @@ services:
       - "32412:32412/udp"
       - "32413:32413/udp"
       - "32414:32414/udp"
+    restart: unless-stopped
+
+  sonarr:
+    image: linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - D:\:/media
+      - ./backup/sonarr/config:/config
+    ports:
+      - "8989:8989"
     restart: unless-stopped
