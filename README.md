@@ -9,6 +9,14 @@ Welcome to the Whipp Media Server repository! This project is designed to help y
 - **Overseerr**: A request management and media discovery tool for your media server.
 - **Homepage**: A simple, standalone homepage for monitoring and managing your media server.
 
+## Requirements
+
+1. Docker
+2. Nvidia Container Kit (for GPU support) or WSL2 (windows for GPU support)
+    - If using wsl, [.wslconfig.template](https://learn.microsoft.com/en-us/windows/wsl/wsl-config#configure-global-options-with-wslconfig) is provided feel free to use as needed
+    - Ensure you use [LF line endings](https://forums.docker.com/t/docker-desktop-eats-ram-past-wsl-limit-set-in-wslconfig-file/128150/6)
+3. A media library
+
 ## Getting Started
 
 To get started with setting up your media server, follow these steps:
@@ -37,6 +45,15 @@ To get started with setting up your media server, follow these steps:
     - Prowlarr: `http://localhost:9696`
     - Overseerr: `http://localhost:5055`
     - Homepage: `http://localhost:3000`
+
+5. To update images (example with plex)
+
+    ```sh
+    docker pull linuxserver/plex:latest
+    docker stop plex
+    docker rm plex
+    docker compose up -d plex
+    ```
 
 ## Contributing
 
