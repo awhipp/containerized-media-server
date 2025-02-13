@@ -108,11 +108,12 @@ services:
   makemkv:
     image: jlesage/makemkv:latest
     container_name: makemkv
+    network_mode: host
     volumes:
       - D:\:/media
     # devices:
     #   - /dev/sr0:/dev/sr0
     #   - /dev/sg2:/dev/sg2
-    ports:
-      - "5800:5800"
+    # ports:
+    #   - "5800:5800"
     restart: unless-stopped
