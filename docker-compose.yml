@@ -86,24 +86,24 @@ services:
     #   - "8191:8191"
     restart: unless-stopped 
 
-  qbittorrent:
-    image: linuxserver/qbittorrent:latest
-    container_name: qbittorrent
-    network_mode: host
-    environment:
-      - PUID=1000 
-      - PGID=1000
-      - TZ=Etc/UTC
-      - WEBUI_PORT=8080
-      - TORRENTING_PORT=6881
-    volumes:
-      - ./backup/qbittorrent/config:/config
-      - D:\:/media
+#   qbittorrent:
+#     image: linuxserver/qbittorrent:latest
+#     container_name: qbittorrent
+#     network_mode: host
+#     environment:
+#       - PUID=1000 
+#       - PGID=1000
+#       - TZ=Etc/UTC
+#       - WEBUI_PORT=8080
+#       - TORRENTING_PORT=6881
+#     volumes:
+#       - ./backup/qbittorrent/config:/config
+#       - D:\:/media
     # ports:
     #   - "8080:8080"
     #   - "6881:6881"
     #   - "6881:6881/udp"
-    restart: unless-stopped
+    # restart: unless-stopped
 
   makemkv:
     image: jlesage/makemkv:latest
