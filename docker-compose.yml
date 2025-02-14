@@ -11,16 +11,6 @@ services:
     volumes:
       - D:\:/media
       - ./backup/plex/config:/config
-    # ports:
-    #   - "32400:32400"
-    #   - "3005:3005"
-    #   - "8324:8324"
-    #   - "32469:32469"
-    #   - "1900:1900/udp"
-    #   - "32410:32410/udp"
-    #   - "32412:32412/udp"
-    #   - "32413:32413/udp"
-    #   - "32414:32414/udp"
     deploy:
       resources:
         reservations:
@@ -40,8 +30,6 @@ services:
     volumes:
       - D:\:/media
       - ./backup/radarr/config:/config
-    # ports:
-    #   - "7878:7878"
     restart: unless-stopped
     
   sonarr:
@@ -55,8 +43,6 @@ services:
     volumes:
       - D:\:/media
       - ./backup/sonarr/config:/config
-    # ports:
-    #   - "8989:8989"
     restart: unless-stopped
 
   prowlarr:
@@ -69,8 +55,6 @@ services:
       - TZ=Etc/UTC
     volumes:
       - ./backup/prowlarr/config:/config
-    # ports:
-    #   - "9696:9696"
     restart: unless-stopped
   
   flaresolverr:
@@ -82,28 +66,7 @@ services:
       - LOG_HTML=${LOG_HTML:-false}
       - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
       - TZ=Etc/UTC
-    # ports:
-    #   - "8191:8191"
     restart: unless-stopped 
-
-#   qbittorrent:
-#     image: linuxserver/qbittorrent:latest
-#     container_name: qbittorrent
-#     network_mode: host
-#     environment:
-#       - PUID=1000 
-#       - PGID=1000
-#       - TZ=Etc/UTC
-#       - WEBUI_PORT=8080
-#       - TORRENTING_PORT=6881
-#     volumes:
-#       - ./backup/qbittorrent/config:/config
-#       - D:\:/media
-    # ports:
-    #   - "8080:8080"
-    #   - "6881:6881"
-    #   - "6881:6881/udp"
-    # restart: unless-stopped
 
   makemkv:
     image: jlesage/makemkv:latest
@@ -114,6 +77,20 @@ services:
     # devices:
     #   - /dev/sr0:/dev/sr0
     #   - /dev/sg2:/dev/sg2
-    # ports:
-    #   - "5800:5800"
+    restart: unless-stopped
+
+  qbittorrent:
+    image: linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    network_mode: host
+    environment:
+        - PUID=1000 
+        - PGID=1000
+        - TZ=Etc/UTC
+        - WEBUI_PORT=8080
+        - TORRENTING_PORT=6881
+    volumes:
+        - ./backup/qbittorrent/config:/config
+        - D:\:/media
+
     restart: unless-stopped
