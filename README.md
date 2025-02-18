@@ -16,8 +16,6 @@ Welcome to the Containerized Media Server repository! This project is designed t
 
 1. Docker
 2. Nvidia Container Kit (for GPU support) or WSL2 (windows for GPU support)
-    - If using wsl, [.wslconfig.template](https://learn.microsoft.com/en-us/windows/wsl/wsl-config#configure-global-options-with-wslconfig) is provided feel free to use as needed
-    - Ensure you use [LF line endings](https://forums.docker.com/t/docker-desktop-eats-ram-past-wsl-limit-set-in-wslconfig-file/128150/6)
 3. A media library
 
 ## Getting Started
