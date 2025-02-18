@@ -1,13 +1,16 @@
-# Whipp Media Server
+# Containerized Media Server
 
-Welcome to the Whipp Media Server repository! This project is designed to help you quickly set up your own media server using the following applications:
+Welcome to the Containerized Media Server repository! This project is designed to help you quickly set up your own media server using the following applications:
 
 - **Plex**: A media server that organizes your media and streams it to any device.
-- **Sonarr**: A PVR for Usenet and BitTorrent users to manage TV shows.
-- **Radarr**: A movie collection manager for Usenet and BitTorrent users.
+- **Sonarr**: A TV show collection manager.
+- **Radarr**: A movie collection manager.
 - **Prowlarr**: An indexer manager/proxy for Sonarr, Radarr, and other applications.
 - **Overseerr**: A request management and media discovery tool for your media server.
-- **Homepage**: A simple, standalone homepage for monitoring and managing your media server.
+
+## Architecture
+
+![Architecture](./diagram.drawio.svg)
 
 ## Requirements
 
@@ -24,8 +27,8 @@ To get started with setting up your media server, follow these steps:
 1. **Clone the Repository**
 
     ```sh
-    git clone https://github.com/yourusername/whipp-media-server.git
-    cd whipp-media-server
+    git clone https://github.com/yourusername/containerized-media-server.git
+    cd containerized-media-server
     ```
 
 2. **Configure Environment Variables**
@@ -43,8 +46,6 @@ To get started with setting up your media server, follow these steps:
     - Sonarr: `http://localhost:8989`
     - Radarr: `http://localhost:7878`
     - Prowlarr: `http://localhost:9696`
-    - Overseerr: `http://localhost:5055`
-    - Homepage: `http://localhost:3000`
 
 5. To update images (example with plex)
 
