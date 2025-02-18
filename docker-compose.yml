@@ -28,7 +28,10 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - D:\:/media
+      - type: bind
+        source: D:/
+        target: /media
+        consistency: delegated
       - ./backup/radarr/config:/config
     restart: unless-stopped
     
@@ -41,7 +44,10 @@ services:
       - PGID=1000
       - TZ=Etc/UTC
     volumes:
-      - D:\:/media
+      - type: bind
+        source: D:/
+        target: /media
+        consistency: delegated
       - ./backup/sonarr/config:/config
     restart: unless-stopped
 
@@ -79,18 +85,47 @@ services:
     #   - /dev/sg2:/dev/sg2
     restart: unless-stopped
 
+  # Default user is admin
+  # Password is found in /config/supervisor.log
+  # Change password and also update default download path as neeeded
+  # Ensure media is downloaded to a location that can be accessed
+  # Open VPN config expected in `backup/qbittorrent/config/openvpn`
+  # Credentials in .env
   qbittorrent:
-    image: linuxserver/qbittorrent:latest
+    image: binhex/arch-qbittorrentvpn:latest
     container_name: qbittorrent
-    network_mode: host
+    network_mode: bridge
     environment:
-        - PUID=1000 
-        - PGID=1000
-        - TZ=Etc/UTC
-        - WEBUI_PORT=8080
-        - TORRENTING_PORT=6881
+      - VPN_ENABLED=yes
+      - VPN_CLIENT=openvpn
+      - VPN_PROV=custom
+      - VPN_USER=${VPN_USER}
+      - VPN_PASS=${VPN_PASS}
+      - LAN_NETWORK=192.168.1.0/24
+      - NAME_SERVERS=1.1.1.1,1.0.0.1
+      - WEBUI_PORT=8080
+      - ENABLE_STARTUP_SCRIPTS=no
+      - ENABLE_PRIVOXY=yes
+      - STRICT_PORT_FORWARD=yes
+      - USERSPACE_WIREGUARD=no
+      - ENABLE_SOCKS=yes
+      - SOCKS_USER=admin
+      - SOCKS_PASS=socks
+      - UMASK=000
+      - PUID=0
+      - PGID=0
+    ports:
+      - 8080:8080
+      - 8099:8099
+      - 8099:8099/udp
+      - 8118:8118
+      - 9118:9118
+    cap_add:
+      - NET_ADMIN
     volumes:
-        - ./backup/qbittorrent/config:/config
-        - D:\:/media
-
+      - type: bind
+        source: D:/
+        target: /media
+        consistency: delegated
+      - ./backup/qbittorrent/config:/config
     restart: unless-stopped
