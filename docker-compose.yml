@@ -17,6 +17,7 @@ services:
           devices:
             - capabilities: [gpu]
     runtime: nvidia
+    mem_limit: 4g
     restart: unless-stopped
 
   radarr:
@@ -33,6 +34,7 @@ services:
         target: /media
         consistency: delegated
       - ./backup/radarr/config:/config
+    mem_limit: 2g
     restart: unless-stopped
     
   sonarr:
@@ -49,6 +51,7 @@ services:
         target: /media
         consistency: delegated
       - ./backup/sonarr/config:/config
+    mem_limit: 2g
     restart: unless-stopped
 
   prowlarr:
@@ -61,6 +64,7 @@ services:
       - TZ=Etc/UTC
     volumes:
       - ./backup/prowlarr/config:/config
+    mem_limit: 512m
     restart: unless-stopped
   
   flaresolverr:
@@ -72,7 +76,21 @@ services:
       - LOG_HTML=${LOG_HTML:-false}
       - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
       - TZ=Etc/UTC
+    mem_limit: 512m
     restart: unless-stopped 
+
+  overseerr:
+    image: linuxserver/overseerr:latest
+    container_name: overseerr
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    volumes:
+      - ./backup/overseerr/config:/config
+    mem_limit: 1g
+    restart: unless-stopped
 
   makemkv:
     image: jlesage/makemkv:latest
@@ -83,6 +101,7 @@ services:
     # devices:
     #   - /dev/sr0:/dev/sr0
     #   - /dev/sg2:/dev/sg2
+    mem_limit: 8g
     restart: unless-stopped
 
   # Default user is admin
@@ -128,4 +147,5 @@ services:
         target: /media
         consistency: delegated
       - ./backup/qbittorrent/config:/config
+    mem_limit: 4g
     restart: unless-stopped

@@ -16,6 +16,8 @@ Welcome to the Containerized Media Server repository! This project is designed t
 
 1. Docker
 2. Nvidia Container Kit (for GPU support) or WSL2 (windows for GPU support)
+    - If using wslconfig for windows, you must use UTF-8 and CLRF line endings.
+    - [More details]( https://github.com/microsoft/WSL/issues/5389)
 3. A media library
 
 ## Getting Started
