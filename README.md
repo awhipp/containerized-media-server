@@ -3,6 +3,7 @@
 Welcome to the Containerized Media Server repository! This project is designed to help you quickly set up your own media server using the following applications:
 
 - **Plex**: A media server that organizes your media and streams it to any device.
+- **Homepage**: A customizable dashboard for your media server.
 - **Sonarr**: A TV show collection manager.
 - **Radarr**: A movie collection manager.
 - **Prowlarr**: An indexer manager/proxy for Sonarr, Radarr, and other applications.
@@ -43,6 +44,7 @@ To get started with setting up your media server, follow these steps:
 
 4. **Access Your Applications**
     - Plex: `http://localhost:32400`
+    - Homepage: `http://localhost:7077`
     - Sonarr: `http://localhost:8989`
     - Radarr: `http://localhost:7878`
     - Prowlarr: `http://localhost:9696`

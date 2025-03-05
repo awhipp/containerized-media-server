@@ -4,8 +4,6 @@ services:
     container_name: plex
     network_mode: host
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=Etc/UTC
       - VERSION=latest
     volumes:
@@ -17,7 +15,7 @@ services:
           devices:
             - capabilities: [gpu]
     runtime: nvidia
-    mem_limit: 4g
+    mem_limit: 12g
     restart: unless-stopped
 
   radarr:
@@ -25,8 +23,6 @@ services:
     container_name: radarr
     network_mode: host
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=Etc/UTC
     volumes:
       - type: bind
@@ -34,7 +30,7 @@ services:
         target: /media
         consistency: delegated
       - ./backup/radarr/config:/config
-    mem_limit: 2g
+    mem_limit: 8g
     restart: unless-stopped
     
   sonarr:
@@ -42,8 +38,6 @@ services:
     container_name: sonarr
     network_mode: host
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=Etc/UTC
     volumes:
       - type: bind
@@ -51,7 +45,7 @@ services:
         target: /media
         consistency: delegated
       - ./backup/sonarr/config:/config
-    mem_limit: 2g
+    mem_limit: 8g
     restart: unless-stopped
 
   prowlarr:
@@ -59,12 +53,10 @@ services:
     container_name: prowlarr
     network_mode: host
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=Etc/UTC
     volumes:
       - ./backup/prowlarr/config:/config
-    mem_limit: 512m
+    mem_limit: 4g
     restart: unless-stopped
   
   flaresolverr:
@@ -76,7 +68,7 @@ services:
       - LOG_HTML=${LOG_HTML:-false}
       - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
       - TZ=Etc/UTC
-    mem_limit: 512m
+    mem_limit: 4g
     restart: unless-stopped 
 
   overseerr:
@@ -84,25 +76,23 @@ services:
     container_name: overseerr
     network_mode: host
     environment:
-      - PUID=1000
-      - PGID=1000
       - TZ=Etc/UTC
     volumes:
       - ./backup/overseerr/config:/config
-    mem_limit: 1g
-    restart: unless-stopped
-
-  makemkv:
-    image: jlesage/makemkv:latest
-    container_name: makemkv
-    network_mode: host
-    volumes:
-      - D:\:/media
-    # devices:
-    #   - /dev/sr0:/dev/sr0
-    #   - /dev/sg2:/dev/sg2
     mem_limit: 8g
     restart: unless-stopped
+
+  # makemkv:
+  #   image: jlesage/makemkv:latest
+  #   container_name: makemkv
+  #   network_mode: host
+  #   volumes:
+  #     - D:\:/media
+  #   # devices:
+  #   #   - /dev/sr0:/dev/sr0
+  #   #   - /dev/sg2:/dev/sg2
+  #   mem_limit: 8g
+  #   restart: unless-stopped
 
   # Default user is admin
   # Password is found in /config/supervisor.log
@@ -131,8 +121,6 @@ services:
       - SOCKS_USER=admin
       - SOCKS_PASS=socks
       - UMASK=000
-      - PUID=0
-      - PGID=0
     ports:
       - 8080:8080
       - 8099:8099
@@ -147,5 +135,20 @@ services:
         target: /media
         consistency: delegated
       - ./backup/qbittorrent/config:/config
-    mem_limit: 4g
+    mem_limit: 8g
+    restart: unless-stopped
+
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    network_mode: bridge
+    ports:
+      - 7077:3000
+    mem_limit: 2g
+    environment: 
+      - HOMEPAGE_VAR_PLEX_API_KEY=${HOMEPAGE_VAR_PLEX_API_KEY}
+    volumes:
+      - ./services.yaml:/app/config/services.yaml # Link the services.yaml file
+      - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
+      - ./docs/images/plex.png:/app/public/icons/plex.png
     restart: unless-stopped

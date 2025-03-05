@@ -1,0 +1,13 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/services/
+
+- Media Services:
+    - Plex:
+        href: "http://192.168.1.194:32400"
+        icon: "plex.png"
+        widget:
+          type: "plex"
+          url: "http://192.168.1.194:32400"
+          key: {{HOMEPAGE_VAR_PLEX_API_KEY}}
+          fields: ["streams", "movies", "tv", "albums"]
