@@ -7,7 +7,12 @@ services:
       - TZ=Etc/UTC
       - VERSION=latest
     volumes:
-      - D:\:/media
+      - type: bind
+        source: D:/
+        target: /media
+        consistency: delegated
+        bind:
+            propagation: shared
       - ./backup/plex/config:/config
     deploy:
       resources:
@@ -29,6 +34,8 @@ services:
         source: D:/
         target: /media
         consistency: delegated
+        bind:
+            propagation: shared
       - ./backup/radarr/config:/config
     mem_limit: 8g
     restart: unless-stopped
@@ -44,6 +51,8 @@ services:
         source: D:/
         target: /media
         consistency: delegated
+        bind:
+            propagation: shared
       - ./backup/sonarr/config:/config
     mem_limit: 8g
     restart: unless-stopped
@@ -122,6 +131,8 @@ services:
         source: D:/
         target: /media
         consistency: delegated
+        bind:
+            propagation: shared
       - ./backup/qbittorrent/config:/config
     mem_limit: 8g
     restart: unless-stopped
