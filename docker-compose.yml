@@ -6,6 +6,8 @@ services:
     environment:
       - TZ=Etc/UTC
       - VERSION=latest
+      - PUID=1000
+      - PGID=1000
     volumes:
       - type: bind
         source: D:/
@@ -29,6 +31,8 @@ services:
     network_mode: host
     environment:
       - TZ=Etc/UTC
+      - PUID=1000
+      - PGID=1000
     volumes:
       - type: bind
         source: D:/
@@ -46,6 +50,8 @@ services:
     network_mode: host
     environment:
       - TZ=Etc/UTC
+      - PUID=1000
+      - PGID=1000
     volumes:
       - type: bind
         source: D:/
@@ -63,6 +69,8 @@ services:
     network_mode: host
     environment:
       - TZ=Etc/UTC
+      - PUID=1000
+      - PGID=1000
     volumes:
       - ./backup/prowlarr/config:/config
     mem_limit: 4g
@@ -74,6 +82,8 @@ services:
     network_mode: host
     environment:
       - TZ=Etc/UTC
+      - PUID=1000
+      - PGID=1000
     volumes:
       - ./backup/overseerr/config:/config
     mem_limit: 8g
@@ -136,6 +146,18 @@ services:
       - ./backup/qbittorrent/config:/config
     mem_limit: 8g
     restart: unless-stopped
+
+  # Afterward go to ./backup/recyclarr/config/recyclarr.yml and update the base_url and api_key
+  # https://github.com/recyclarr/config-templates
+  recyclarr:
+    image: ghcr.io/recyclarr/recyclarr
+    container_name: recyclarr
+    environment:
+        - TZ=Etc/UTC
+        - RECYCLARR_CREATE_CONFIG=true
+    network_mode: host
+    volumes:
+      - ./backup/recyclarr/config:/config
 
   homepage:
     image: ghcr.io/gethomepage/homepage:latest
